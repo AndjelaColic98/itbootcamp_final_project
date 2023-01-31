@@ -1,5 +1,7 @@
 package tests;
 
+import com.github.javafaker.Faker;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -29,5 +31,14 @@ public class LoginTests extends BaseTest{
         homePage.openLogin();
         Assert.assertEquals(loginPage.email().getAttribute("type"), "email");
         Assert.assertEquals(loginPage.password().getAttribute("type"), "password");
+    }
+
+    @Test
+    public void userDoesNotExist() {
+        Faker faker = new Faker();
+        homePage.openLogin();
+        loginPage.login(faker.internet().emailAddress(), faker.internet().password());
+        Assert.assertEquals(loginPage.messageToString(), "User does not exists");
+        Assert.assertTrue(driver.getCurrentUrl().contains("/login"));
     }
 }
