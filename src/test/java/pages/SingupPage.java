@@ -38,7 +38,11 @@ public class SingupPage extends BasePage{
         return confirmPassword;
     }
 
-    public void singUp (){
-
+    public void singUp(String nameStr, String emailStr, String passwordStr, String passwordConfStr) {
+        name.sendKeys(nameStr);
+        email.sendKeys(emailStr);
+        password.sendKeys(passwordStr);
+        confirmPassword.sendKeys(passwordConfStr);
+        singMeUpBtn.click();
     }
 }
