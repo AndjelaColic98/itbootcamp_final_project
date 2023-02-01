@@ -26,4 +26,19 @@ public class SingupPage extends BasePage{
         super(driver, driverWait);
     }
 
+    public WebElement email() {
+        return email;
+    }
+
+    public WebElement password() {
+        return password;
+    }
+
+    public WebElement confirmPassword() {
+        return confirmPassword;
+    }
+
+    public void singUp (){
+
+    }
 }

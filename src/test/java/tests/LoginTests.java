@@ -35,7 +35,7 @@ public class LoginTests extends BaseTest{
     @Test
     public void loginCheckURL() {
         driverWait.until(ExpectedConditions.urlContains("/login"));
-        Assert.assertTrue(driver.getCurrentUrl().contains("/login"));
+        loginPage.urlContains("/login");
     }
 
     @Test
@@ -49,7 +49,7 @@ public class LoginTests extends BaseTest{
         Faker faker = new Faker();
         loginPage.login(faker.internet().emailAddress(), faker.internet().password());
         Assert.assertEquals(loginPage.messageToString(), "User does not exists");
-        Assert.assertTrue(driver.getCurrentUrl().contains("/login"));
+        loginPage.urlContains("/login");
     }
 
     @Test
@@ -57,14 +57,14 @@ public class LoginTests extends BaseTest{
         Faker faker = new Faker();
         loginPage.login("admin@admin.com", faker.internet().password());
         Assert.assertEquals(loginPage.messageToString(), "Wrong password");
-        Assert.assertTrue(driver.getCurrentUrl().contains("/login"));
+        loginPage.urlContains("/login");
     }
 
     @Test
     public void login() {
         loginPage.login("admin@admin.com", "12345");
         driverWait.until(ExpectedConditions.urlContains("/home"));
-        Assert.assertTrue(driver.getCurrentUrl().contains("/home"));
+        loginPage.urlContains("/home");
         homePage.logout();
     }
 
@@ -74,8 +74,8 @@ public class LoginTests extends BaseTest{
         driverWait.until(ExpectedConditions.urlContains("/home"));
         Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div/header/div/div[3]/button[2]")).isDisplayed());
         homePage.logout();
-        Assert.assertTrue(driver.getCurrentUrl().contains("/login"));
+        loginPage.urlContains("/login");
         driver.get("https://vue-demo.daniel-avellaneda.com/home");
-        Assert.assertTrue(driver.getCurrentUrl().contains("/login"));
+        loginPage.urlContains("/login");
     }
 }
