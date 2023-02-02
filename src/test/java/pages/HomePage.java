@@ -31,4 +31,8 @@ public class HomePage extends BasePage{
     public void signUp(){
         singupBtn.click();
     }
+
+    public WebElement logoutBtn() {
+        return logout;
+    }
 }
