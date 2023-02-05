@@ -46,7 +46,6 @@ public class LoginTests extends BaseTest{
 
     @Test
     public void userDoesNotExist() {
-        Faker faker = new Faker();
         loginPage.login(faker.internet().emailAddress(), faker.internet().password());
         Assert.assertEquals(loginPage.messageToString(), "User does not exists");
         loginPage.urlContains("/login");
@@ -54,7 +53,6 @@ public class LoginTests extends BaseTest{
 
     @Test
     public void wrongPasswordLogin() {
-        Faker faker = new Faker();
         loginPage.login("admin@admin.com", faker.internet().password());
         Assert.assertEquals(loginPage.messageToString(), "Wrong password");
         loginPage.urlContains("/login");
