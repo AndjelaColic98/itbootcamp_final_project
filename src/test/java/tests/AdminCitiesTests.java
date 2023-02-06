@@ -1,19 +1,16 @@
 package tests;
 
-import com.github.javafaker.Faker;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.AdminCitiesPage;
 import pages.HomePage;
 import pages.LoginPage;
-
-import java.nio.file.WatchEvent;
 
 public class AdminCitiesTests extends BaseTest {
     private AdminCitiesPage adminCitiesPage;
@@ -36,32 +33,50 @@ public class AdminCitiesTests extends BaseTest {
     public void beforeMethod() {
         super.beforeMethod();
         homePage.openLogin();
+        loginPage.login("admin@admin.com", "12345");
+        adminCitiesPage.adminCities();
     }
 
     @Test
     public void urlCheck() {
-        loginPage.login("admin@admin.com", "12345");
-        adminCitiesPage.adminCities();
         loginPage.urlContains("/admin/cities");
         Assert.assertTrue(driver.findElement(By.className("btnLogout")).isDisplayed());
     }
 
     @Test
     public void createNewCity() {
-        loginPage.login("admin@admin.com", "12345");
-        adminCitiesPage.adminCities();
         adminCitiesPage.createNewCity(cityName);
-        Assert.assertTrue(adminCitiesPage.savedSuccessfully().contains("Saved successfully"));
+        Assert.assertTrue(adminCitiesPage.successfullyMessage().contains("Saved successfully"));
     }
 
     @Test
     public void editCityName() {
-        loginPage.login("admin@admin.com", "12345");
-        adminCitiesPage.adminCities();
         adminCitiesPage.createNewCity(cityName);
         adminCitiesPage.searchCity(cityName);
-        adminCitiesPage.editNameCity(cityName + " - edited");
-        Assert.assertTrue(adminCitiesPage.savedSuccessfully().contains("Saved successfully"));
+        adminCitiesPage.editNameCity( " - edited");
+        Assert.assertTrue(adminCitiesPage.successfullyMessage().contains("Saved successfully"));
+    }
 
+    @Test
+    public void searchCity(){
+        adminCitiesPage.createNewCity(cityName);
+        adminCitiesPage.searchCity(cityName);
+        Assert.assertTrue(adminCitiesPage.searchingCities().contains(cityName));
+    }
+
+    @Test
+    public void deleteCity(){
+        adminCitiesPage.createNewCity(cityName);
+        adminCitiesPage.searchCity(cityName);
+        adminCitiesPage.editNameCity(" - edited");
+        Assert.assertTrue(adminCitiesPage.numberOfRows().contains("1 - 1"));
+        Assert.assertTrue(adminCitiesPage.searchingCities().contains(cityName + " - edited"));
+        adminCitiesPage.deletingCity();
+        Assert.assertTrue(adminCitiesPage.successfullyMessage().contains("Deleted successfully"));
+    }
+
+    @AfterMethod
+    public void afterMethod(){
+        homePage.logout();
     }
 }

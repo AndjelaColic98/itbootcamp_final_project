@@ -1,15 +1,11 @@
 package pages;
 
-import com.github.javafaker.Faker;
-import org.checkerframework.checker.formatter.qual.Format;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import tests.BaseTest;
 
 import java.time.Duration;
 
@@ -38,6 +34,15 @@ public class AdminCitiesPage extends BasePage {
 
     @FindBy(id = "edit")
     private WebElement edit;
+
+    @FindBy(xpath = "//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[1]/div[2]/table/tbody/tr")
+    private WebElement firstRowSearched;
+
+    @FindBy(id = "delete")
+    private WebElement deleteBtn;
+
+    @FindBy(xpath = "/html/body/div/div[6]/div/div/div[2]/button[2]")
+    private WebElement deleteClick;
 
 
     public AdminCitiesPage(WebDriver driver, WebDriverWait driverWait) {
@@ -69,10 +74,26 @@ public class AdminCitiesPage extends BasePage {
         driver.findElement(By.xpath("//*[@id=\"app\"]/div[5]/div/div/div[3]/button[2]/span")).click();
     }
 
-    public String savedSuccessfully() {
+    public String successfullyMessage() {
         return message.getText();
     }
 
+    public String searchingCities(){
+        driverWait.until(ExpectedConditions.visibilityOf(firstRowSearched));
+        return firstRowSearched.getText();
+    }
 
+    public String numberOfRows(){
+        WebElement numberRows = driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[1]/div[3]/div[2]"));
+        driverWait.until(ExpectedConditions.visibilityOf(numberRows));
+        return numberRows.getText();
+    }
 
+    public void deletingCity(){
+        driverWait.until(ExpectedConditions.visibilityOf(deleteBtn));
+        deleteBtn.click();
+        driverWait.until(ExpectedConditions.visibilityOf(deleteClick));
+        deleteClick.click();
+        driverWait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[3]/div/div/div/div/div[1]"))));
+    }
 }
