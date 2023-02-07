@@ -44,6 +44,12 @@ public class AdminCitiesPage extends BasePage {
     @FindBy(xpath = "/html/body/div/div[6]/div/div/div[2]/button[2]")
     private WebElement deleteClick;
 
+    @FindBy(xpath = "//*[@id=\"app\"]/div[5]/div/div/div[3]/button[2]/span")
+    private WebElement saveButton;
+
+    @FindBy(xpath = "//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[1]/div[3]/div[2]")
+    private WebElement numberOfRows;
+
 
     public AdminCitiesPage(WebDriver driver, WebDriverWait driverWait) {
         super(driver, driverWait);
@@ -64,14 +70,13 @@ public class AdminCitiesPage extends BasePage {
     public void searchCity(String city){
         searchInput.click();
         searchInput.sendKeys(city);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
     }
 
     public void editNameCity(String editedName) {
-        driverWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[1]/div[2]/table/tbody")));
+        driverWait.until(ExpectedConditions.visibilityOf(firstRowSearched));
         edit.click();
-        driver.findElement(By.xpath("//*[@id=\"name\"]")).sendKeys(editedName);
-        driver.findElement(By.xpath("//*[@id=\"app\"]/div[5]/div/div/div[3]/button[2]/span")).click();
+        nameOfCity.sendKeys(editedName);
+        saveButton.click();
     }
 
     public String successfullyMessage() {
@@ -84,16 +89,13 @@ public class AdminCitiesPage extends BasePage {
     }
 
     public String numberOfRows(){
-        WebElement numberRows = driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[1]/div[3]/div[2]"));
-        driverWait.until(ExpectedConditions.visibilityOf(numberRows));
-        return numberRows.getText();
+        driverWait.until(ExpectedConditions.visibilityOf(numberOfRows));
+        return numberOfRows.getText();
     }
 
     public void deletingCity(){
         driverWait.until(ExpectedConditions.visibilityOf(deleteBtn));
         deleteBtn.click();
         driverWait.until(ExpectedConditions.visibilityOf(deleteClick));
-        deleteClick.click();
-        driverWait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[3]/div/div/div/div/div[1]"))));
-    }
+        deleteClick.click();}
 }

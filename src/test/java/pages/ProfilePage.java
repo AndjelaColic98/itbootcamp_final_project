@@ -45,11 +45,9 @@ public class ProfilePage extends BasePage {
         super(driver, driverWait);
     }
 
-    public void myProfilePage(){
+    public void editName(String nameString){
         myProfileBtn.click();
         driverWait.until(ExpectedConditions.visibilityOf(name));
-    }
-    public void editName(String nameString){
         name.click();
         name.sendKeys(Keys.CONTROL + "a");
         name.sendKeys(Keys.DELETE);

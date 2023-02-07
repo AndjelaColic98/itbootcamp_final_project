@@ -1,8 +1,6 @@
 package tests;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -53,19 +51,19 @@ public class AdminCitiesTests extends BaseTest {
     public void editCityName() {
         adminCitiesPage.createNewCity(cityName);
         adminCitiesPage.searchCity(cityName);
-        adminCitiesPage.editNameCity( " - edited");
+        adminCitiesPage.editNameCity(" - edited");
         Assert.assertTrue(adminCitiesPage.successfullyMessage().contains("Saved successfully"));
     }
 
     @Test
-    public void searchCity(){
+    public void searchCity() {
         adminCitiesPage.createNewCity(cityName);
         adminCitiesPage.searchCity(cityName);
         Assert.assertTrue(adminCitiesPage.searchingCities().contains(cityName));
     }
 
     @Test
-    public void deleteCity(){
+    public void deleteCity() {
         adminCitiesPage.createNewCity(cityName);
         adminCitiesPage.searchCity(cityName);
         adminCitiesPage.editNameCity(" - edited");
@@ -76,7 +74,7 @@ public class AdminCitiesTests extends BaseTest {
     }
 
     @AfterMethod
-    public void afterMethod(){
+    public void afterMethod() {
         homePage.logout();
     }
 }

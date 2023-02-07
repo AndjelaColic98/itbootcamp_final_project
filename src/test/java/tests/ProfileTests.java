@@ -1,12 +1,10 @@
 package tests;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.AdminCitiesPage;
+
 import pages.HomePage;
 import pages.LoginPage;
 import pages.ProfilePage;
@@ -18,7 +16,6 @@ public class ProfileTests extends BaseTest{
     private LoginPage loginPage;
     private String name;
     private String phone;
-    private String city;
     private String country;
 
     @BeforeClass
@@ -30,7 +27,6 @@ public class ProfileTests extends BaseTest{
         loginPage = new LoginPage(driver,driverWait);
         name = faker.name().firstName();
         phone = faker.phoneNumber().cellPhone();
-        city = faker.country().capital();
         country = faker.country().name();
     }
 
@@ -44,7 +40,6 @@ public class ProfileTests extends BaseTest{
 
     @Test
     public void editProfile() {
-        profilePage.myProfilePage();
         profilePage.editName(name);
         profilePage.editPhoneNumber(phone);
         profilePage.editCity("New York");

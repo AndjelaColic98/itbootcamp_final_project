@@ -1,10 +1,7 @@
 package tests;
 
-import com.github.javafaker.Faker;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -12,7 +9,6 @@ import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.LoginPage;
 
-import java.time.Duration;
 
 public class LoginTests extends BaseTest{
     private HomePage homePage;
@@ -70,7 +66,7 @@ public class LoginTests extends BaseTest{
     public void logout() {
         loginPage.login("admin@admin.com", "12345");
         driverWait.until(ExpectedConditions.urlContains("/home"));
-        Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div/header/div/div[3]/button[2]")).isDisplayed());
+        Assert.assertTrue(homePage.logoutBtn().isDisplayed());
         homePage.logout();
         loginPage.urlContains("/login");
         driver.get("https://vue-demo.daniel-avellaneda.com/home");
