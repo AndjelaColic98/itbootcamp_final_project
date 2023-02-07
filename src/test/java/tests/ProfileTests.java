@@ -12,11 +12,6 @@ import pages.LoginPage;
 import pages.ProfilePage;
 
 public class ProfileTests extends BaseTest{
-    //Test #1: Edits profile
-    //Podaci: random podaci korišćenjem faker library-ja
-    //assert:
-    //•	Verifikovati da je prikazana poruka Profile saved successfuly
-    //•	Verifikovati da svaki input sada za value atribut ima vrednost koja je uneta u okviru forme
 
     private ProfilePage profilePage;
     private HomePage homePage;
@@ -48,13 +43,21 @@ public class ProfileTests extends BaseTest{
     }
 
     @Test
-    public void editProfile(){
-        profilePage.editProfile(name,phone,city,country);
+    public void editProfile() {
+        profilePage.myProfilePage();
+        profilePage.editName(name);
+        profilePage.editPhoneNumber(phone);
+        profilePage.editCity("New York");
+        profilePage.editCountry(country);
+        profilePage.editTwitter("https://" + faker.internet().url() + "/twitter");
+        profilePage.saveBtn();
+
+
         Assert.assertTrue(profilePage.message().contains("Profile saved successfuly"));
-        Assert.assertEquals(profilePage.getName().getAttribute("value"),name);
-        Assert.assertEquals(profilePage.getPhone().getAttribute("value"),phone);
-        Assert.assertEquals(profilePage.getCity().getAttribute("value"),city);
-        Assert.assertEquals(profilePage.getCountry().getAttribute("value"),country);
+        Assert.assertEquals(profilePage.getName().getAttribute("value"), name);
+        Assert.assertEquals(profilePage.getPhone().getAttribute("value"), phone);
+        Assert.assertEquals(profilePage.getCity().getAttribute("value"), "New York");
+        Assert.assertEquals(profilePage.getCountry().getAttribute("value"), country);
     }
 
 }

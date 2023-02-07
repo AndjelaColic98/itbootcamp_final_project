@@ -1,5 +1,7 @@
 package pages;
 
+import org.checkerframework.checker.units.qual.K;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -31,27 +33,56 @@ public class ProfilePage extends BasePage {
         @FindBy(xpath = "//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[4]/div/div/div/div/div[1]")
         private WebElement message;
 
+        @FindBy(xpath = "//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[2]/span/form/div/div/div[4]/span/div/div/div[1]/div[1]/div[1]/div/button")
+        private WebElement deleteCityBtn;
+
+        @FindBy(id = "urlTwitter")
+        private WebElement twitterURL;
+
 
 
     public ProfilePage(WebDriver driver, WebDriverWait driverWait) {
         super(driver, driverWait);
     }
 
-    public void editProfile(String nameStr, String phoneStr, String cityStr, String countryStr){
+    public void myProfilePage(){
         myProfileBtn.click();
         driverWait.until(ExpectedConditions.visibilityOf(name));
-        name.clear();
-        name.sendKeys(nameStr);
-        phone.clear();
-        phone.sendKeys(phoneStr);
-        city.clear();
-        city.sendKeys(cityStr);
-        country.clear();
-        driverWait.until(ExpectedConditions.textToBePresentInElementValue(country,""));
-        country.sendKeys(countryStr);
-        saveBtn.click();
-        myProfileBtn.click();
     }
+    public void editName(String nameString){
+        name.click();
+        name.sendKeys(Keys.CONTROL + "a");
+        name.sendKeys(Keys.DELETE);
+        name.sendKeys(nameString);
+    }
+    public void editPhoneNumber(String phoneString){
+        phone.click();
+        phone.sendKeys(Keys.CONTROL + "a");
+        phone.sendKeys(Keys.DELETE);
+        phone.sendKeys(phoneString);
+    }
+    public void editCity(String cityName){
+        deleteCityBtn.click();
+        city.sendKeys(Keys.CONTROL + "a");
+        city.sendKeys(Keys.DELETE);
+        city.sendKeys(cityName);
+        city.sendKeys(Keys.ENTER);
+    }
+    public void editCountry(String countryName){
+        country.click();
+        country.sendKeys(Keys.CONTROL + "a");
+        country.sendKeys(Keys.DELETE);
+        country.sendKeys(countryName);
+    }
+   public void editTwitter(String twitterUrl){
+        twitterURL.click();
+        twitterURL.sendKeys(Keys.CONTROL + "a");
+        twitterURL.sendKeys(Keys.DELETE);
+        twitterURL.sendKeys(twitterUrl);
+   }
+   public void saveBtn(){
+        saveBtn.click();
+   }
 
     public String message(){
         return message.getText();

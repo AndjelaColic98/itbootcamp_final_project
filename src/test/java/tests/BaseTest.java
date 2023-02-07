@@ -13,6 +13,7 @@ import java.time.Duration;
 
 public abstract class BaseTest {
     protected WebDriver driver;
+
     protected WebDriverWait driverWait;
     protected Faker faker;
 
